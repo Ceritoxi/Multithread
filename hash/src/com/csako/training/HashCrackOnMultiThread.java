@@ -1,15 +1,15 @@
-package com.csákó.training;
+package com.csako.training;
 
 import java.nio.charset.StandardCharsets;
 
 import com.google.common.hash.Hasher;
 import com.google.common.hash.Hashing;
 
-public class HashCrackOnSingleThread {
+public class HashCrackOnMultiThread {
 	private String result;
 	private String hash;
 
-	public HashCrackOnSingleThread(String hash) {
+	public HashCrackOnMultiThread(String hash) {
 		this.result = "";
 		this.hash = hash;
 	}
@@ -29,7 +29,13 @@ public class HashCrackOnSingleThread {
 	private void generateWords(String base, int length) {
 		for (char c = 'a'; c <= 'z' && this.result.equals(""); c++) {
 			if (weHaveAWord(length)) {
-				inspectWordForResult(base + c);
+				String word = base + c;
+				new Thread(new Runnable() {
+					@Override
+					public void run() {
+						inspectWordForResult(word);
+					}
+				}).start();
 			} else {
 				generateWords(base + c, length - 1);
 			}

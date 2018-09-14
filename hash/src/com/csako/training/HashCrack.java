@@ -1,4 +1,4 @@
-package com.csákó.training;
+package com.csako.training;
 /*
  * package com.epam.training;
  * 
